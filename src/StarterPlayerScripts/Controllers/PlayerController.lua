@@ -19,6 +19,6 @@ function PlayerController.KnitInit()
     print("player knitInited on player ctrlr")
 end
 function PlayerController.initPlayer()
-    print(Knit.player)
+   --  print(Knit.player)
 end
 return PlayerController

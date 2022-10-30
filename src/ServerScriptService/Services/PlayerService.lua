@@ -11,4 +11,17 @@ function PlayerService:KnitStart()
     --     print("Points changed for " .. player.Name .. ":", points)
     -- end)
 end
+
+function PlayerService.clone()
+    --- you have to set Archivable to true to clone a player
+    -- game.Workspace.YourUsernameHere.Archivable = true
+    -- copy = game.Workspace.YourUsernameHere:clone()
+    -- game.Workspace.YourUsernameHere.Archivable = false
+    
+    -- copy.Parent = game.Workspace
+    
+    -- copy.Name = "Test"
+    
+    -- copy:MoveTo(Vector3.new(0, 0, 0))
+end
 return PlayerService

@@ -31,10 +31,10 @@ function MoneyService.Client:GetMoney(player)
 end
 
 function MoneyService:KnitStart()
-    print("Money Service Started up")
+   --  print("Service Started up")
 end
 
 function MoneyService.KnitEnd()
-    print("Money Service Initialized")
+    print("Money Service Ended")
 end
 return MoneyService

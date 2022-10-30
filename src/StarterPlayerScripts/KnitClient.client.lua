@@ -9,14 +9,6 @@ Knit.Start():andThen(function()
    -- PlayerController.initPlayer():andThen(function()end)
    -- Client-side code
 
-
-
-    local MoneyService = Knit.GetService("MoneyService")
-
-    MoneyService:GetMoney():andThen(function(money)
-        print(money)
-    end)
-
 -- Don't want to use promises? When you start Knit on the client,
 -- set the ServicePromises option to false:
 end):catch(warn)

@@ -1,8 +1,0 @@
--- local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
--- local DoorCtrlr = Knit.CreateController { name="DoorControler"}
--- function DoorCtrlr.init()
---     print("Door ctrlr has started")
--- -- put a door at this position ->  998.99, 1210.482, -150.02
--- -- game:GetService("")
--- end
--- return DoorCtrlr
