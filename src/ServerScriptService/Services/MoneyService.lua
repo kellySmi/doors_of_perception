@@ -1,4 +1,4 @@
-local Players = game:GetService("Players")
+-- local Players = game:GetService("Players")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Knit = require(ReplicatedStorage.Packages.Knit)
@@ -24,8 +24,14 @@ function MoneyService:GiveMoney(player, amount)
     -- playerDataStore:SetAsync("money", money)
 end
 
+function MoneyService.Client:GetMoney(player)
+    -- We already wrote this method, so we can just call the other one.
+    -- 'self.Server' will reference back to the root MoneyService.
+    return self.Server:GetMoney(player)
+end
+
 function MoneyService:KnitStart()
-    print("Money Service Strated")
+    print("Money Service Started up")
 end
 
 function MoneyService.KnitEnd()

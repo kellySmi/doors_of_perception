@@ -1,14 +1,22 @@
 local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
 
--- -- Load all services within 'Services':
 Knit.AddControllers(script.Parent.Controllers)
 
--- -- Load all services (the Deep version scans all descendants of the passed instance):
--- -- Knit.AddServicesDeep(script.Parent.OtherServices)
-
- Knit.Start():andThen(function()
-	print("we cliented it up.")
+Knit.Start():andThen(function()
+	print("client start up.")
     -- print(Knit.Player)
-   -- local PlayerController = Knit.Controllers.PlayerController
-    -- PlayerController.init()
+  -- local PlayerController = Knit.Controllers.PlayerController
+   -- PlayerController.initPlayer():andThen(function()end)
+   -- Client-side code
+
+
+
+    local MoneyService = Knit.GetService("MoneyService")
+
+    MoneyService:GetMoney():andThen(function(money)
+        print(money)
+    end)
+
+-- Don't want to use promises? When you start Knit on the client,
+-- set the ServicePromises option to false:
 end):catch(warn)
