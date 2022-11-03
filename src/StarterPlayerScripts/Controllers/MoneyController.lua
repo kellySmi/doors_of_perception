@@ -6,8 +6,9 @@ function MoneyController.KnitInit()
     MoneyService:GetMoney():andThen(function(money)
          -- set money in player gui
          local pgui  = Knit.Player:WaitForChild("PlayerGui")
-        local scoreGui = pgui:WaitForChild("Score")
-        scoreGui.ScoreFrame.ScoreLabel.Text = money
+        local recScoreGui = pgui:WaitForChild("RecScore")
+        recScoreGui.ScoreFrame.ScoreLabel.Text = money
+      --  print("money has been added")
     end)
 end
 

@@ -16,7 +16,7 @@ local PlayerController = Knit.CreateController { Name="PlayerController"}
 
 -- end)
 function PlayerController.KnitInit()
-    print("player knitInited on player ctrlr")
+  --  print("player knitInited on player ctrlr")
 end
 function PlayerController.initPlayer()
    --  print(Knit.player)

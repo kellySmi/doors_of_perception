@@ -3,7 +3,7 @@ local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
 Knit.AddControllers(script.Parent.Controllers)
 
 Knit.Start():andThen(function()
-	print("client start up.")
+--	print("client start up.")
     -- print(Knit.Player)
   -- local PlayerController = Knit.Controllers.PlayerController
    -- PlayerController.initPlayer():andThen(function()end)

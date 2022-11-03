@@ -1,6 +1,7 @@
 local ProximityPromptService = game:GetService("ProximityPromptService")
 -- Detect when prompt is triggered
 local function onPromptTriggered(promptObject)
+	print("I have been prompted!!")
 	print(promptObject.Name)
 	-- if promptObject.Name =='GoldPrompt'  then
 	-- 	local ppart = promptObject.Parent
@@ -17,6 +18,8 @@ local function onPromptTriggered(promptObject)
 end
 -- Detect when prompt hold begins
 local function onPromptHoldBegan(promptObject, player)
+	print("I have been prompted!!")
+	print(promptObject.Name)
 end
 -- Detect when prompt hold ends
 local function onPromptHoldEnded(promptObject, player)
