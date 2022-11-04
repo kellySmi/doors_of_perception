@@ -1,7 +1,12 @@
+local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
+local ProximityPService = Knit.CreateService { Name="ProximityPService", Client = {} }
 local ProximityPromptService = game:GetService("ProximityPromptService")
+ProximityPromptService.Enabled = true
+
 -- Detect when prompt is triggered
-local function onPromptTriggered(promptObject)
+local function onPromptTriggered(promptObject, player)
 	print("I have been prompted!!")
+	print(player.Name)
 	print(promptObject.Name)
 	-- if promptObject.Name =='GoldPrompt'  then
 	-- 	local ppart = promptObject.Parent
@@ -18,8 +23,9 @@ local function onPromptTriggered(promptObject)
 end
 -- Detect when prompt hold begins
 local function onPromptHoldBegan(promptObject, player)
-	print("I have been prompted!!")
-	print(promptObject.Name)
+	-- print("I have been prompted!!")
+	-- print(promptObject.Name)
+	
 end
 -- Detect when prompt hold ends
 local function onPromptHoldEnded(promptObject, player)
@@ -28,3 +34,5 @@ end
 ProximityPromptService.PromptTriggered:Connect(onPromptTriggered)
 ProximityPromptService.PromptButtonHoldBegan:Connect(onPromptHoldBegan)
 ProximityPromptService.PromptButtonHoldEnded:Connect(onPromptHoldEnded)
+
+return ProximityPService

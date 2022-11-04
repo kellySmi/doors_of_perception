@@ -4,8 +4,7 @@ local Knit = require(RepStorage.Packages.Knit)
 local DoorController = Knit.CreateController { Name="DoorControler"}
 
 function DoorController.KnitInit()
-    print("Door ctrlr has started")
-    -- get a dict of doors and their positions
+    -- print("Door ctrlr has started")
     local DoorService = Knit.GetService("DoorService")
     DoorService:SpawnAllDoors():andThen(function()
        -- print("complete")
