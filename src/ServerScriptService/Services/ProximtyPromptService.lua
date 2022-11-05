@@ -4,7 +4,8 @@ local ProximityPromptService = game:GetService("ProximityPromptService")
 ProximityPromptService.Enabled = true
 local prompts = script.Parent.Parent.Prompts
 local function onPromptTriggered(promptObject, player)
-	local promptService = require(prompts:WaitForChild(promptObject.Name..'s',10))
+	local promptSvc = promptObject.Name..'s'
+	local promptService = require(prompts:WaitForChild(promptSvc,10))
 	promptService.route(promptObject,player)
 end
 local function onPromptHoldBegan(promptObject, player)
