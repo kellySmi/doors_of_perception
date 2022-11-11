@@ -1,30 +1,63 @@
 local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
--- local messSvc = Knit:GetService("MessageService")
+local messSvc = Knit.GetService("MessageService")
 local MessagePrompts = { Name="MessagePrompts" }
-
+MessagePrompts.MesageDict = {
+    MazeKeeperDude={
+        messages = {
+            { 
+                text="Congratulations, You made it through the maze.",
+                waitTime=2
+            },
+            { 
+                text="I will give you this key I found in the maze.",
+                waitTime=4
+            },
+            { 
+                text="And now you have to find you way up the mountain to the tower.",
+                waitTime=4
+            },
+            { 
+                text="Good Luck.",
+                waitTime=2
+            }
+        }
+    },
+    MtTowerDude={ 
+        messages= {
+            { 
+                text="Welcome to the Mountain Tower",
+                waitTime=4
+            } ,
+            { 
+                text="If you make it to the top there is a bridge to another world.",
+                waitTime=4
+            },
+            { 
+                text="The bridge can convey motion if you find the clue.",
+                waitTime=4
+            },
+            { 
+                text="Good Luck.",
+                waitTime=4
+            }  
+        }
+    }
+}
 function MessagePrompts.route(promptObject, player)
-    MessagePrompts.mazeMessage(promptObject,player)
+    MessagePrompts.displayMessage(promptObject, player)
+
 end
 
-function MessagePrompts.mazeMessage(promptObject,player)
-   -- local proximityprompt = script.Parent:WaitForChild("ProximityPrompt",10)
-  --  local SSStorage = game:GetService("ServerScriptService")
-  --  local messSvc = require(SSStorage:WaitForChild("MessageService"))
-
- --   proximityprompt.Triggered:Connect(function(player)
-        -- show screen gui 
-        -- size, ZIndex, TextSize, TextWrapped, FontFace.Style, ont
-        local labelOpts = { TextSize="20" }
+function MessagePrompts.displayMessage(promptObject,player)
+        promptObject.Enabled = false
+        local msgs = MessagePrompts.MesageDict[promptObject.Parent.Name]['messages']
+        local labelOpts = { TextSize="20" } -- ,  FontFace = Font.fromName("LuckiestGuy")}
         local playerGui = player:WaitForChild('PlayerGui',10)
-        -- messSvc.displayMessage("Congratulations, You maade it through the maze.",playerGui,labelOpts,2)
-        -- wait(2)
-        -- messSvc.displayMessage("I will give you this key I found in the maze.",playerGui,labelOpts,4)
-        -- wait(3)
-        -- messSvc.displayMessage("And now you have to find you way up the mountain to the tower.",playerGui,labelOpts,4)
-        -- wait(3)
-        -- messSvc.displayMessage("Good Luck.",playerGui,labelOpts,2)
-    
-        -- return true;
- --   end)
+        for i, msg in pairs(msgs) do  -- iterate thru MessageDict
+            messSvc.Client:displayMessage(msg.text,playerGui,labelOpts,msg.waitTime)
+        end
+        promptObject.Enabled = true
 end
+
+
 return MessagePrompts
