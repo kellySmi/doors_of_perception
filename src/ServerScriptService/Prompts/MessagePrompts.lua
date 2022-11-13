@@ -1,6 +1,5 @@
 local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
-local messSvc = Knit.GetService("MessageService")
-local MessagePrompts = { Name="MessagePrompts" }
+local MessagePrompts = Knit.CreateService { Name="MessagePrompts" }
 MessagePrompts.MesageDict = {
     MazeKeeperDude={
         messages = {
@@ -53,11 +52,13 @@ function MessagePrompts.displayMessage(promptObject,player)
         local msgs = MessagePrompts.MesageDict[promptObject.Parent.Name]['messages']
         local labelOpts = { TextSize="20" } -- ,  FontFace = Font.fromName("LuckiestGuy")}
         local playerGui = player:WaitForChild('PlayerGui',10)
-        for i, msg in pairs(msgs) do  -- iterate thru MessageDict
-            messSvc.Client:displayMessage(msg.text,playerGui,labelOpts,msg.waitTime)
+        for _, msg in pairs(msgs) do  -- iterate thru MessageDict
+            MessagePrompts.messSvc.Client:displayMessage(msg.text,playerGui,labelOpts,msg.waitTime)
         end
         promptObject.Enabled = true
 end
 
-
+function MessagePrompts.KnitStart()
+    MessagePrompts.messSvc = Knit.GetService("MessageService")
+end
 return MessagePrompts

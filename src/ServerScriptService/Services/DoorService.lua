@@ -13,11 +13,12 @@ local DoorService = Knit.CreateService { Name="DoorService", Client = {} }
 -- D1={telePad="A1", vect={x=3,y=0,z=0}}}
 DoorService.DoorDict = { 
     X1 = { target="X3", position = { x=1019.936, y=1266.362, z=99.810 }, description="Door on a rock", offset={x=0,y=0,z=0}},
-    X2 = { target="X4", position={ x=318.584, y=1217.058, z=482.235}, description="Elevtor door level 1A", offset={x=0,y=0,z=0}},
+    X2 = { target="X7", position={ x=318.584, y=1213.058, z=482.235}, description="Elevtor bottom level 1A", offset={x=0,y=0,z=-5}},
     X3 = { target="X1", position={ x=1097.711, y=1168.817, z=955.421}, description="test door", offset={x=0,y=0,z=0}},
     X4 = { target="X2", position={x=1044.109, y=1170.882, z=941.384}, description="maze exit door", offset={x=0,y=0,z=0}},
     X5 = { target="X6", position={x=916.891, y=1209.468, z=445.554}, description="start door 2", offset={x=0,y=0,z=-5}, orientation={x=0, y=90, z=0}},
-    X6 = { target="X5", position={x=1169.221, y=1212.727, z=377.013}, description="start door 1", offset={x=0,y=0,z=-5}}
+    X6 = { target="X5", position={x=1169.221, y=1212.727, z=377.013}, description="start door 1", offset={x=0,y=0,z=-5}},
+    X7 = { target="X2", position={x=280.96, y=1350.581, z=483.554}, description="Elevator top level 1A ", offset={x=0,y=0,z=-5}}
 }
 
 function DoorService.Client:SpawnAllDoors()

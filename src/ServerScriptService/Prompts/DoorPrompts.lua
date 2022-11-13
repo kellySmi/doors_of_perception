@@ -1,8 +1,6 @@
 -- file to handle all of the door prompts
 local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
-local AuthService = Knit.GetService("AuthorizeService")
-local DoorService = Knit.GetService("DoorService")
-local DoorPrompts = { Name="DoorPrompts"}
+local DoorPrompts = Knit.CreateService { Name="DoorPrompts", Client = {}}
 
 function DoorPrompts.route(promptObject, player)
     DoorPrompts.openCloseDoor(promptObject,player)
@@ -27,14 +25,14 @@ function DoorPrompts.openCloseDoor(promptObject,player)
 		local tag = model.Telepad.Tag.Value
 		-- open door
 
-	    local userAuth = AuthService.checkUser(playerId)
+	    local userAuth = DoorPrompts.AuthService.checkUser(playerId)
 	 	if userAuth then
 			DoorPrompts.openDoor(promptObject,openSound,frame,tweenService,frameOpen)
 			frame.Touched:Connect(function() 
-				print("touched 1")
+				-- print("touched 1")
 				-- get part side touched
 				if tpOn then
-					DoorService.Client:thresholdCrossed(player,tag)
+					DoorPrompts.DoorService.Client:thresholdCrossed(player,tag)
 					DoorPrompts.closeDoor(promptObject,closeSound,frame,tweenService,frameClose)
 					tpOn = false
 					-- task.wait(5)
@@ -60,10 +58,10 @@ function DoorPrompts.closeDoor(promptObject,closeSound,frame,tweenService,frameC
 	closeSound:Play()
 	frame.CanCollide = true
 	tweenService:Create(frame,TweenInfo.new(.35),{CFrame = frameClose.CFrame}):Play()
-	frame.Touched:Connect(function()
-		print("touched when closed so do nothing")
-		
-	end)
+	frame.Touched:Connect(function() end)
 end
-
+function DoorPrompts.KnitStart()
+	DoorPrompts.AuthService = Knit.GetService("AuthorizeService")
+	DoorPrompts.DoorService = Knit.GetService("DoorService")
+end
 return DoorPrompts

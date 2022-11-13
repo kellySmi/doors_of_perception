@@ -5,15 +5,15 @@ local player = PlayerService.LocalPlayer
 
 PlayerController.playerData = { coins=0, doorsFound={}, backsack={}, lastConnectDate="", lastSpawnPt="Start" }
 
-player.CharacterAdded:Connect(function()
-
+player.CharacterAdded:Connect(function(player)
+  -- print("Character Added")
   local PlayerSrvc = Knit.GetService("PlayerService")
   PlayerSrvc:GetPlayerData(player):andThen(function (playerData) 
     -- print(playerData)
    -- playerData.coins = playerData.coins +  10
    -- check last connect date if over 24 hrs give daily 10 coins 
    -- local playerUpdated = false
-   
+  -- player.CameraMode.
     -- if playerData.lastConnectDate and (dt - 24) > playerData.lastConnectDate then
 
     -- end
@@ -31,7 +31,10 @@ player.CharacterAdded:Connect(function()
     -- local humanoid = player:WaitForChild("Humanoid",10)
     -- humanoid.WalkSpeed = 50
     -- humanoid.JumpHeight = 2
+  
   end):catch(warn)
+  
+    
 end)
 
 
