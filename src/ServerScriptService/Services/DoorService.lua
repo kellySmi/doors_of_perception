@@ -13,9 +13,11 @@ local DoorService = Knit.CreateService { Name="DoorService", Client = {} }
 -- D1={telePad="A1", vect={x=3,y=0,z=0}}}
 DoorService.DoorDict = { 
     X1 = { target="X3", position = { x=1019.936, y=1266.362, z=99.810 }, description="Door on a rock", offset={x=0,y=0,z=0}},
-    -- X2 = { target="X1", position={ x=318.584, y=1223.158, z=482.245}, description="Elevtor door level 1A", offset={x=0,y=0,z=0}},
-    X3 = { target="X1", position={ x=1097.711, y=1168.817, z=955.421}, description="test door", offset={x=0,y=0,z=0}}
-    -- X4 = { target="X1", position={x=1044.109, y=1170.882, z=941.384}, description="maze exit door", offset={x=3,y=0,z=0}},
+    X2 = { target="X4", position={ x=318.584, y=1217.058, z=482.235}, description="Elevtor door level 1A", offset={x=0,y=0,z=0}},
+    X3 = { target="X1", position={ x=1097.711, y=1168.817, z=955.421}, description="test door", offset={x=0,y=0,z=0}},
+    X4 = { target="X2", position={x=1044.109, y=1170.882, z=941.384}, description="maze exit door", offset={x=0,y=0,z=0}},
+    X5 = { target="X6", position={x=916.891, y=1209.468, z=445.554}, description="start door 2", offset={x=0,y=0,z=-5}, orientation={x=0, y=90, z=0}},
+    X6 = { target="X5", position={x=1169.221, y=1212.727, z=377.013}, description="start door 1", offset={x=0,y=0,z=-5}}
 }
 
 function DoorService.Client:SpawnAllDoors()
@@ -28,8 +30,11 @@ function DoorService.Client:SpawnAllDoors()
         tag.Name = "Tag"
         tag.Parent = newDoor.Telepad
         newDoor:PivotTo(CFrame.new(door['position']['x'],door['position']['y'],door['position']['z']))
-       -- newDoor.Frame.Position = newDoor.Frame.Position + Vector3.new(door['position']['x'],door['position']['y'],door['position']['z'])
-		-- newDoor.Frame.Anchored = true
+        -- if door.orientation then   -- this sets the rotation of the door
+        --     local desiredPivotCFrameInWorldSpace = CFrame.new(door['orientation']['x'], door['orientation']['y'], door['orientation']['z'])
+        --     local rootPart = newDoor.Telepad
+        --     rootPart.PivotOffset = rootPart:Vector3.new(desiredPivotCFrameInWorldSpace)
+        -- end
         newDoor.Name = "generated_door_".. i
         newDoor.Parent = game.Workspace
     end
@@ -42,17 +47,19 @@ function DoorService.Client:thresholdCrossed(player,tag)
 -- get destination
     self.Server.FindDestinationTeleport(self.Server.DoorDict[tag]['target'], function(tele) 
         local dest = tele
-        self.Server:sendPlayer(player,tag,dest)
+        self.Server:sendPlayer(player,dest,tag)
     end)
 end
 
-function DoorService:sendPlayer(player,doorId, dest)
+function DoorService:sendPlayer(player, dest, tag)
     
-    local newDest = dest.CFrame.p + Vector3.new(0,0,2) 
+    local newDest = dest.CFrame.p + Vector3.new(self.DoorDict[tag]['offset']['x'],self.DoorDict[tag]['offset']['y'],self.DoorDict[tag]['offset']['z']) 
     player.Character:MoveTo(newDest)
-    wait(5)
+    task.wait(5)
 end
-
+-- this function will recursively scan the workspace for parts named Telepad 
+-- that have a stringValue element named Tag. The value of tag is the telepad id 
+-- it will return the value in a callback function if one is provided, otherwise it will be returned 
 function DoorService.FindDestinationTeleport(tag: string, callBackFn)
 	local tele = nil 
 	local function scan(p) 
@@ -67,7 +74,10 @@ function DoorService.FindDestinationTeleport(tag: string, callBackFn)
 		end 
 	end 
 	scan(game:GetService("Workspace")) 
-	callBackFn(tele)
+    if callBackFn then
+	    callBackFn(tele)
+    end
+    return tele
 end
 
 function DoorService:KnitStart()

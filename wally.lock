@@ -10,7 +10,17 @@ dependencies = []
 [[package]]
 name = "kelly/doorsofperception"
 version = "0.1.0"
-dependencies = [["Knit", "sleitnick/knit@1.4.7"]]
+dependencies = [["Knit", "sleitnick/knit@1.4.7"], ["numerics", "penguindevs/numerics@1.0.0"], ["roact", "roblox/roact@1.4.4"]]
+
+[[package]]
+name = "penguindevs/numerics"
+version = "1.0.0"
+dependencies = []
+
+[[package]]
+name = "roblox/roact"
+version = "1.4.4"
+dependencies = []
 
 [[package]]
 name = "sleitnick/comm"

@@ -3,10 +3,13 @@ local ProximityPService = Knit.CreateService { Name="ProximityPService", Client 
 local ProximityPromptService = game:GetService("ProximityPromptService")
 ProximityPromptService.Enabled = true
 local prompts = script.Parent.Parent.Prompts
+local RESET_TIME = 2
+
 local function onPromptTriggered(promptObject, player)
 	local promptSvc = promptObject.Name..'s'
 	local promptService = require(prompts:WaitForChild(promptSvc,10))
 	promptService.route(promptObject,player)
+	task.wait(RESET_TIME)
 end
 local function onPromptHoldBegan(promptObject, player)
 end
