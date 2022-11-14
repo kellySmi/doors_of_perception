@@ -1,23 +1,29 @@
 -- Maze controller class
 local Players = game:GetService("Players")
-local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
+local RepStore = game:GetService("ReplicatedStorage")
+local Knit = require(RepStore.Packages.Knit)
 local MazeController =  Knit.CreateController { Name="MazeController" }
--- local MazeEntPart = game.Workspace:WaitForChild("MazeEntranceTriggerPlate",10)
+local levelA = game.Workspace:WaitForChild("Level A",10)
+local MazeEntTriggerPart = levelA:WaitForChild("MazeEntranceTriggerPlate",10)
+local MazeExitTriggerPart = levelA:WaitForChild("MazeExitTriggerPlate",10)
+local RESET_TIME = 5
+local mazeAudio = RepStore.aMazingSound
+
+
 function MazeController.route(route,part)
     if(route == 'entranceTriggered') then 
         MazeController.triggerMazeEnter(part)
     end
-    -- local playerName = playerPart.Parent.Name
-    -- local player = players:WaitForChild(playerName,10)
+
     -- playEntMessage(player)
     -- -- if player.CameraMode ~= Enum.CameraMode.LockFirstPerson then
     -- player.CameraMode = Enum.CameraMode.LockFirstPerson
-    -- local character = player.Character
+    -- local character = r
     -- local humanoid = character:WaitForChild('Humanoid',10)
     -- if humanoid then
     --     humanoid.Jump = false
     -- end
-    -- local charWalkSound = character.HumanoidRootPart:WaitForChild("Running",10) -- Running.
+    -- local charWalkSound = player.Character.HumanoidRootPart:WaitForChild("Running",10) -- Running.
     -- if charWalkSound then
     --     charWalkSound.Volume = 0
     -- end
@@ -31,23 +37,45 @@ function MazeController.route(route,part)
     --end
     
 end
-function MazeController.triggerMazeEnter(part)
-     local playerName = part.Parent.Name
-    local player = Players.LocalPlayer
-    -- playEntMessage(player)
-    -- -- if player.CameraMode ~= Enum.CameraMode.LockFirstPerson then
-    -- player.CameraMode = Enum.CameraMode.LockFirstPerson
-    -- local character = player.Character
-    -- local humanoid = character:WaitForChild('Humanoid',10)
-    -- if humanoid then
-    --     humanoid.Jump = false
-    -- end
+
+local function playEntMessage(player)
+    local labelOpts = {TextSize="20",  FontFace= Font.fromName("LuckiestGuy")}
+    local playerGui = player:WaitForChild('PlayerGui',10)
+    MazeController.MessageSvc:displayMessage("Welcome to the Maze of Wonder",playerGui,labelOpts,2)
+    task.wait(2)
+    MazeController.MessageSvc:displayMessage("When you reach the end of the maze, follow the arrows on the walls.",playerGui,labelOpts,4)
+    task.wait(4)
+    MazeController.MessageSvc:displayMessage("You will be placed in first person mode until you exit the maze.",playerGui,labelOpts,4)
+    task.wait(4)
+    MazeController.MessageSvc:displayMessage("Watch out for the top of the maze it kill hurt you",playerGui,labelOpts,4)
+    task.wait(4)
+    MazeController.MessageSvc:displayMessage("Good Luck.",playerGui,labelOpts,2)
 end
-function MazeController.KnitInit()
+function MazeController.triggerMazeEnter()
+    local player = Players.LocalPlayer
+    playEntMessage(player)
+    local charWalkSound = player.Character.HumanoidRootPart:WaitForChild("Running",10)
+    charWalkSound.Volume = 0
+    player.CameraMode = Enum.CameraMode.LockFirstPerson
+    local humanoid = player.Character:WaitForChild('Humanoid',10)
+    if humanoid then
+        humanoid.Jump = false
+    end
+    mazeAudio:Play()
+    task.wait(RESET_TIME) 
+end
+
+function MazeController.KnitStart()
     --  print("player knitInited on player ctrlr")
-    -- MazeEntPart.Touched:Connect(function(part)
-    --     MazeController.route('entranceTriggered', part)
-    -- end
+    MazeEntTriggerPart.Touched:Connect(function(part)
+        --  MazeController.route('entranceTriggered', part)
+         MazeController.triggerMazeEnter(part)
+    end)
+    MazeExitTriggerPart.Touched:Connect(function(part)
+        MazeController.route('exitTriggered', part)
+    end)
+    --player.CameraMode = Enum.CameraMode.Classic	
+    MazeController.MessageSvc = Knit.GetService("MessageService")
 end
 
 return MazeController
