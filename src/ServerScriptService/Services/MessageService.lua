@@ -1,13 +1,14 @@
 local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
 local MessageService =  Knit.CreateService { Name="MessageService", Client = {} }
 
-local PlayerGUi = game:WaitForChild("StarterGui")
-local LabelOpts = {TextSize="20",  FontFace= Font.fromName("LuckiestGuy")}
+local StarterGui = game:WaitForChild("StarterGui",10)
+-- local PlayerGui = StarterGui:WaitForChild("playerGui",10)
+local LabelOpts = {TextSize="20",  FontFace = Enum.Font.LuckiestGuy}
 
-function MessageService.Client:displayMessage(messageText,playerGui, labelOpts, waitTime)
-	if not playerGui then 
-		playerGui = PlayerGUi
-	end
+function MessageService.Client:displayMessage(player, messageText, labelOpts, waitTime)
+	-- if not playerGui then 
+	local playerGui = player:WaitForChild('PlayerGui',10)
+	--- end
 	if not labelOpts then 
 		labelOpts = LabelOpts
 	end

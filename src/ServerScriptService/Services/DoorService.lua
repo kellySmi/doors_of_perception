@@ -1,24 +1,17 @@
 local RepStorage = game:GetService("ReplicatedStorage")
 local Knit = require(RepStorage.Packages.Knit)
 local DoorService = Knit.CreateService { Name="DoorService", Client = {} }
--- local DoorDict = {A1={telePad="B1", position={x=998.99, y=1210.482, z=-150.02}, description="", offset={x=3,y=0,z=0}},
--- 	A2={telePad="B2", position={x=318.453, y=1222.899, z=482.438}, description="", offset={x=3,y=0,z=0}}, 
--- 	A3={telePad="A4", position={x=318.584, y=1223.158, z=482.245}, description="Elevtor door lower level A", offset={x=0,y=0,z=0}}, 
--- 	A4={telePad="A3", position={x=280.96, y=1350.581, z=483.554}, description="Elevtor upper level A", offset={x=3,y=0,z=0}}, 
--- 	B1={telePad="A2", position={x=720.01, y=1205.67, z=359.673}, description="",offset={x=3,y=0,z=0}}, 
--- 	B2={telePad="C1", position={x=1044.109, y=1170.882, z=941.384}, description="maze exit door", offset={x=3,y=0,z=0}},
--- 	B3={telePad="C2", vect={x=3,y=0,z=0}}, 
--- 	C1={telePad="B3", vect={x=3,y=0,z=0}},
--- 	C2={telePad="D1", vect={x=3,y=0,z=0}}, 
--- D1={telePad="A1", vect={x=3,y=0,z=0}}}
-DoorService.DoorDict = { 
+DoorService.DoorDict = {  -- orientation is in radians and we only rotate on the y axis for now
     X1 = { target="X3", position = { x=1019.936, y=1266.362, z=99.810 }, description="Door on a rock", offset={x=0,y=0,z=0}},
     X2 = { target="X7", position={ x=318.584, y=1213.058, z=482.235}, description="Elevtor bottom level 1A", offset={x=0,y=0,z=-5}},
     X3 = { target="X1", position={ x=1097.711, y=1168.817, z=955.421}, description="test door", offset={x=0,y=0,z=0}},
     X4 = { target="X2", position={x=1044.109, y=1170.882, z=941.384}, description="maze exit door", offset={x=0,y=0,z=0}},
-    X5 = { target="X6", position={x=916.891, y=1209.468, z=445.554}, description="start door 2", offset={x=0,y=0,z=-5}, orientation={x=0, y=90, z=0}},
-    X6 = { target="X5", position={x=1169.221, y=1212.727, z=377.013}, description="start door 1", offset={x=0,y=0,z=-5}},
-    X7 = { target="X2", position={x=280.96, y=1350.581, z=483.554}, description="Elevator top level 1A ", offset={x=0,y=0,z=-5}}
+    X5 = { target="X6", position={x=927.212, y=1209.468, z=445.66}, description="start door 2", offset={x=0,y=0,z=-5}, orientation={x=0, y=90, z=0}},
+    X6 = { target="X5", position={x=1169.221, y=1212.727, z=377.013}, description="start door 1", offset={x=-5,y=0,z=0}},
+    X7 = { target="X2", position={x=280.96, y=1350.581, z=483.554}, description="Elevator top level 1A ", offset={x=0,y=0,z=-5}},
+    X8 = { target="X10", position={x=1001.743, y=1430.925, z=516.507}, description="Wall Door 1", offset={x=0,y=0,z=-5} },-- orientation={x=0, y=86.21, z=0}},
+    X9 = { target="X10", position={x=1012.721, y=1432.326, z=502.744}, description="Wall Door 2", offset={x=0,y=0,z=-5}, orientation={x=0, y=90, z=0}},
+    X10 = { target="X9", position={x=939.874, y=1420.31, z=510.312}, description="Wall Door 3", offset={x=0,y=0,z=-5}} --, orientation={x=0, y=41.47, z=0}}
 }
 
 function DoorService.Client:SpawnAllDoors()
@@ -30,12 +23,11 @@ function DoorService.Client:SpawnAllDoors()
         tag.Value = i
         tag.Name = "Tag"
         tag.Parent = newDoor.Telepad
-        newDoor:PivotTo(CFrame.new(door['position']['x'],door['position']['y'],door['position']['z']))
-        -- if door.orientation then   -- this sets the rotation of the door
-        --     local desiredPivotCFrameInWorldSpace = CFrame.new(door['orientation']['x'], door['orientation']['y'], door['orientation']['z'])
-        --     local rootPart = newDoor.Telepad
-        --     rootPart.PivotOffset = rootPart:Vector3.new(desiredPivotCFrameInWorldSpace)
-        -- end
+        if door.orientation then   -- this sets the rotation of the door
+            newDoor:PivotTo(CFrame.new(door['position']['x'],door['position']['y'],door['position']['z'])  * CFrame.Angles(0,math.rad(door['orientation']['y']),0)) -- * CFrame.new(door['orientation']['x'], , door['orientation']['z']))
+        else
+            newDoor:PivotTo(CFrame.new(door['position']['x'],door['position']['y'],door['position']['z']))
+        end
         newDoor.Name = "generated_door_".. i
         newDoor.Parent = game.Workspace
     end

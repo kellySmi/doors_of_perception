@@ -12,7 +12,7 @@ function PlayerService:initPlayer(player)
 end
 
 function PlayerService.Client:GetPlayerData(player)
-    local storedPlayerData = self.Server.DataService.GetData('player', player.UserId) -- :andThen(function(storedPlayerData) 
+    local storedPlayerData = self.Server.DataService.GetData('player', player.UserId)
     if storedPlayerData then 
         -- self.Server.playerData = storedPlayerData
         -- check last connect time
@@ -42,7 +42,6 @@ end
 -- end
 function PlayerService.Client:SavePlayerData(player, playerData)
     self.Server.DataService.UpdateData('player', player.UserId, playerData)
-    
 end
 
 function PlayerService:KnitStart()

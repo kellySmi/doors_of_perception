@@ -39,17 +39,34 @@ function MazeController.route(route,part)
 end
 
 local function playEntMessage(player)
-    local labelOpts = {TextSize="20",  FontFace= Font.fromName("LuckiestGuy")}
-    local playerGui = player:WaitForChild('PlayerGui',10)
-    MazeController.MessageSvc:displayMessage("Welcome to the Maze of Wonder",playerGui,labelOpts,2)
-    task.wait(2)
-    MazeController.MessageSvc:displayMessage("When you reach the end of the maze, follow the arrows on the walls.",playerGui,labelOpts,4)
+    local labelOpts = {TextSize="20" } -- ,  FontFace= Font.fromName("LuckiestGuy")}
+   -- local playerGui = player:WaitForChild('PlayerGui',10)
+    -- MazeController.ScreenGUIController:displayMessageGui("Welcome to the Maze of Wonder")
+    -- MazeController.ScreenGUIController:displayMessageGui("When you reach the end of the maze") 
+    -- MazeController.ScreenGUIController:displayMessageGui("You will be placed in first person mode until you exit the maze.")
+    -- MazeController.ScreenGUIController:displayMessageGui("Watch out for the top of the maze it kill hurt you")
+    -- MazeController.ScreenGUIController:displayMessageGui("Good Luck.")
+    MazeController.MessageSvc:displayMessage("Welcome to the Maze of Wonder",labelOpts,5)
     task.wait(4)
-    MazeController.MessageSvc:displayMessage("You will be placed in first person mode until you exit the maze.",playerGui,labelOpts,4)
+    MazeController.MessageSvc:displayMessage("When you reach the end of the maze",labelOpts,5)
     task.wait(4)
-    MazeController.MessageSvc:displayMessage("Watch out for the top of the maze it kill hurt you",playerGui,labelOpts,4)
+    MazeController.MessageSvc:displayMessage("You will be placed in first person mode until you exit the maze.",labelOpts,5)
     task.wait(4)
-    MazeController.MessageSvc:displayMessage("Good Luck.",playerGui,labelOpts,2)
+    MazeController.MessageSvc:displayMessage("Watch out for the top of the maze it kill hurt you",labelOpts,5)
+    task.wait(4)
+    MazeController.MessageSvc:displayMessage("Good Luck.",labelOpts,3)
+end
+local function playExitMessage(player)
+    local labelOpts = {TextSize="20" } -- ,  FontFace= Font.fromName("LuckiestGuy")}
+    MazeController.MessageSvc:displayMessage("You Made It thru the hard part.",labelOpts,5)
+    task.wait(4)
+    MazeController.MessageSvc:displayMessage("Now walk on the top of the maze walls.",labelOpts,5)
+    task.wait(4)
+    MazeController.MessageSvc:displayMessage("Follow the markings.",labelOpts,5)
+    task.wait(4)
+    -- MazeController.MessageSvc:displayMessage("Watch out for the top of the maze it kill hurt you",labelOpts,5)
+    -- task.wait(4)
+    MazeController.MessageSvc:displayMessage("Good Luck.",labelOpts,3)
 end
 function MazeController.triggerMazeEnter()
     local player = Players.LocalPlayer
@@ -64,7 +81,15 @@ function MazeController.triggerMazeEnter()
     mazeAudio:Play()
     task.wait(RESET_TIME) 
 end
-
+function MazeController.triggerMazeExit()
+    local player = Players.LocalPlayer
+    playExitMessage(player)
+    local charWalkSound = player.Character.HumanoidRootPart:WaitForChild("Running",10)
+    charWalkSound.Volume = 0
+    player.CameraMode = Enum.CameraMode.Classic
+    mazeAudio:Stop()
+    task.wait(RESET_TIME) 
+end
 function MazeController.KnitStart()
     --  print("player knitInited on player ctrlr")
     MazeEntTriggerPart.Touched:Connect(function(part)
@@ -72,10 +97,11 @@ function MazeController.KnitStart()
          MazeController.triggerMazeEnter(part)
     end)
     MazeExitTriggerPart.Touched:Connect(function(part)
-        MazeController.route('exitTriggered', part)
+        MazeController.triggerMazeExit(part)
     end)
     --player.CameraMode = Enum.CameraMode.Classic	
     MazeController.MessageSvc = Knit.GetService("MessageService")
+  --   MazeController.ScreenGUIController = Knit.GetController("ScreenGUIController")
 end
 
 return MazeController

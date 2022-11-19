@@ -3,8 +3,10 @@ local Knit = require(ReplicatedStorage.Packages.Knit)
 local ScreenGUIController = Knit.CreateController { Name="ScreenGUIController"}
 local Players = game:GetService("Players")
 local Roact = require(ReplicatedStorage.Packages.roact)
+local PlayerGui = game:WaitForChild("StarterGui")
+local LabelOpts = {TextSize="20"}  -- , FontFace = Font:fromEnum(Enum.Font.LuckiestGuy) }
 
-function ScreenGUIController.ShowGUI(guiName,value)
+function ScreenGUIController.ShowGUI()
     -- this will show a screen GUI and update the value
      local sg = Roact.createElement("ScreenGui", {}, {
         ScoreFrame = Roact.createElement("Frame",{Name="ScoreFame"}, {
@@ -18,7 +20,7 @@ function ScreenGUIController.ShowGUI(guiName,value)
     Roact.mount(sg, Players.LocalPlayer.PlayerGui)
 end
 
-function ScreenGUIController.createDoorScoreGUI() 
+function ScreenGUIController:createDoorScoreGUI() 
 
 end
 function ScreenGUIController.KnitInit() 
