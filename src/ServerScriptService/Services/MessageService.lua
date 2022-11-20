@@ -1,7 +1,7 @@
 local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
 local MessageService =  Knit.CreateService { Name="MessageService", Client = {} }
 
-local StarterGui = game:WaitForChild("StarterGui",10)
+-- local StarterGui = game:WaitForChild("StarterGui",10)
 -- local PlayerGui = StarterGui:WaitForChild("playerGui",10)
 local LabelOpts = {TextSize="20",  FontFace = Enum.Font.LuckiestGuy}
 

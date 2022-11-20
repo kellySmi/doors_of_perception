@@ -2,7 +2,7 @@ local Knit = require(game:GetService("ReplicatedStorage").Packages.Knit)
 local ProximityPService = Knit.CreateService { Name="ProximityPService", Client = {} }
 local ProximityPromptService = game:GetService("ProximityPromptService")
 ProximityPromptService.Enabled = true
-local prompts = script.Parent.Parent.Prompts
+-- local prompts = script.Parent.Parent.Prompts
 local RESET_TIME = 2
 
 ProximityPromptService.PromptTriggered:Connect(function (promptObject, player)

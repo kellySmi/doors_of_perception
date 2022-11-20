@@ -1,6 +1,5 @@
 local repStore = game:GetService("ReplicatedStorage")
 local Knit = require(repStore.Packages.Knit)
-local numerics = require(repStore.Packages.numerics)
 local PlayerService = Knit.CreateService( { Name="PlayerService", Client = {} } )
 local playerData = { coins=0, doors={}, backsack={}, lastConnectDate="", lastSpawnPt="Start"}
 
@@ -17,11 +16,13 @@ function PlayerService.Client:GetPlayerData(player)
         -- self.Server.playerData = storedPlayerData
         -- check last connect time
         -- if not storedPlayerData.lastConnectDate then
-        storedPlayerData.lastConnectDate = DateTime.now() -- :FormatUniversalTime()
+        
         -- else
-        --     if self.Server:CheckConnectTime(storedPlayerData.lastConnectDate) then 
-        --         storedPlayerData.coins += 10 -- = storedPlayerData.coins + 10
-        --     end
+        if self.Server:CheckConnectTime(storedPlayerData.lastConnectDate) then 
+            storedPlayerData.coins += 10 -- = storedPlayerData.coins + 10
+        end
+        -- store now as the last connect date 
+        storedPlayerData.lastConnectDate = DateTime.now():ToUniversalTime()
         -- end
         return storedPlayerData
     else
@@ -30,16 +31,28 @@ function PlayerService.Client:GetPlayerData(player)
  --   end):catch(warn)
     
 end
--- internal function to check if the last connect time was more than 24 hours from the current time
--- function PlayerService:CheckConnectTime(lastTime) 
---    -- local dt = DateTime.now()
---     local offset24Hours = 60 * (60 * 24)
---     local dtn = numerics.SecondsToClock(offset24Hours)
---     -- local dtn = tonumber(dt,10)
---    -- local lt = tonumber(lastTime,10)
---     print(dtn)
---     return dtn > lastTime
--- end
+
+-- internal function to check if the last connect time was more than 1 day from the current time
+function PlayerService:CheckConnectTime(lastTime) 
+    local dt = DateTime.now():ToUniversalTime()
+    if lastTime then
+        if lastTime["Year"] == dt["Year"] then
+            if lastTime["Month"] == dt["Month"] then
+                if lastTime["Day"] == dt["Day"] then
+                    return false
+                else
+                    return true
+                end
+            else
+                return true
+            end
+        else
+            return true
+        end
+    end
+   return false
+end
+
 function PlayerService.Client:SavePlayerData(player, playerData)
     self.Server.DataService.UpdateData('player', player.UserId, playerData)
 end

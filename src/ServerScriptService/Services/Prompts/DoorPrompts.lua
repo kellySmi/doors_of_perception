@@ -19,28 +19,39 @@ function DoorPrompts.openCloseDoor(promptObject,player)
 	if 	promptObject.ActionText == "Close" then
 		-- closing door here
 		DoorPrompts.closeDoor(promptObject,closeSound,frame,tweenService,frameClose)
-		
 	else
 		local playerId = player.UserId
 		local tag = model.Telepad.Tag.Value
 		-- open door
-
-	    local userAuth = DoorPrompts.AuthService.checkUser(playerId)
-	 	if userAuth then
+		local doorConfig = DoorPrompts.DoorService.DoorDict[tag]
+		if doorConfig.private == 1 then 
+			local userAuth = DoorPrompts.AuthService.checkUser(playerId)
+			if userAuth then
+				DoorPrompts.openDoor(promptObject,openSound,frame,tweenService,frameOpen)
+				frame.Touched:Connect(function()
+					-- get part side touched
+					if tpOn then
+						DoorPrompts.DoorService.Client:thresholdCrossed(player,tag)
+						DoorPrompts.closeDoor(promptObject,closeSound,frame,tweenService,frameClose)
+						tpOn = false
+						-- task.wait(5)
+						-- frame.CanTouch = true
+					end
+					-- repeat task.wait() until game.Players:GetPlayerFromCharacter(h.Parent):DistanceFromCharacter(frame.Position) > 7
+				end)
+			end
+		else
 			DoorPrompts.openDoor(promptObject,openSound,frame,tweenService,frameOpen)
-			frame.Touched:Connect(function() 
-				-- print("touched 1")
-				-- get part side touched
-				if tpOn then
-					DoorPrompts.DoorService.Client:thresholdCrossed(player,tag)
-					DoorPrompts.closeDoor(promptObject,closeSound,frame,tweenService,frameClose)
-					tpOn = false
-					-- task.wait(5)
-					-- frame.CanTouch = true
-				end
-				-- repeat task.wait() until game.Players:GetPlayerFromCharacter(h.Parent):DistanceFromCharacter(frame.Position) > 7
-			end)
-	 	end
+				frame.Touched:Connect(function()
+					-- get part side touched
+					if tpOn then
+						DoorPrompts.DoorService.Client:thresholdCrossed(player,tag)
+						DoorPrompts.closeDoor(promptObject,closeSound,frame,tweenService,frameClose)
+						tpOn = false
+					end
+				end)
+		end
+	    
 		
 	
 	end
