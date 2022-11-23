@@ -5,7 +5,6 @@ local playerData = { coins=0, doors={}, backsack={}, lastConnectDate="", lastSpa
 
 function PlayerService:initPlayer(player)
     -- load the players blank  checkpoints, money and items    
-    
     self.DataService:AddData('player',player.UserId, playerData)
     return playerData
 end

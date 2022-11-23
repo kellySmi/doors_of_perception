@@ -37,13 +37,7 @@ end)
 
 -- this is the rb system exit function for all the player stuff
 player.CharacterRemoving:Connect(function (player)
-  -- local playerData = 
-  -- PlayerSrvc:SavePlayerData(playerData):andThen(function (playerData) 
-  --   print(playerData)
-  --   -- if playerData then
-  --   --   -- set player data on player 
-  --   -- end
-  -- end):catch(warn)
+  PlayerController.SavePlayerData(PlayerController.playerData)
 end)
 -- this handles the player info button 
 playerInfoButton.MouseButton1Click:Connect( function()
@@ -52,9 +46,6 @@ playerInfoButton.MouseButton1Click:Connect( function()
 
 	playerInfoContents.Frame.Visible = not playerInfoContents.Frame.Visible;
 end)
-
-
-
 
 function PlayerController.SavePlayerData(playerData)
   local PlayerSrvc = Knit.GetService("PlayerService")
