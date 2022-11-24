@@ -39,7 +39,7 @@ end)
 player.CharacterRemoving:Connect(function (player)
   PlayerController.SavePlayerData(PlayerController.playerData)
 end)
--- this handles the player info button 
+-- this handles the player info button clicked
 playerInfoButton.MouseButton1Click:Connect( function()
 	print("Button clicked!")
   -- refresh with latest player data

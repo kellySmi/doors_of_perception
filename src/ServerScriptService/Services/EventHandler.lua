@@ -9,10 +9,4 @@ function EventHandler.Client:HandleEvent(player,event)
 	eventService.Client:HandleEvent(player,event)
 	task.wait(RESET_TIME)
 end
--- function EventHandler.KnitStart()
-    
-   -- TestButton.Activated:Connect(function()
-    --    print("Action!!")
-    -- end)
--- end
 return EventHandler
