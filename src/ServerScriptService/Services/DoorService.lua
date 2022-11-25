@@ -16,7 +16,9 @@ DoorService.DoorDict = {
     Y1 = { target="Z2", position={x=798.287, y=1659.879, z=1234.709}, private=1, description="Rainbow Bridge", offset={x=0,y=0,z=5}},
     Z2 = { target="Z3", position={x=410.506, y=1619.023, z=4611.756}, private=1, description="FunLand 1", offset={x=0,y=0,z=5}},
     Z3 = { target="Z4", position={x=-3083.764, y=1536.487, z=5423.168}, private=1, description="Sand Castle Funland", offset={x=0,y=0,z=-5}, angle={x=0, y=45, z=0}},
-    Z4 = { target="Z1", position={x=2726.198, y=1631.364, z=5331.252}, private=1, description="Red Rocks Cave Funland", offset={x=0,y=0,z=-5}}, -- , angle={x=0, y=45, z=0}
+    Z4 = { target="Z5", position={x=2726.198, y=1631.364, z=5331.252}, private=1, description="Red Rocks Cave Funland", offset={x=0,y=0,z=-5}}, -- , angle={x=0, y=45, z=0}
+    Z5 = { target="Z1", position={x=2099.76, y=1389.993, z=12589.762}, private=1, description="Deep Lava Rocks Funland", offset={x=0,y=0,z=-5}}, 
+    
 
     X1 = { target="X11",position={ x=1019.936, y=1266.362, z=99.810 }, private=1, description="Door on a rock", offset={x=0,y=0,z=-5}},
     X2 = { target="X7", position={ x=318.584, y=1213.058, z=482.235}, private=1, description="Elevtor bottom level 1A", offset={x=0,y=0,z=-5}},
@@ -64,8 +66,17 @@ function DoorService.Client:thresholdCrossed(player,tag)
         self.Server:sendPlayer(player,dest,tag)
         -- SetPlayer door counter 
         local playerData = DoorService.PlayerSrvc.Client:GetPlayerData(player)
-        table.insert(playerData.doors, {doorId = tag})
-        DoorService.PlayerSrvc.Client:SavePlayerData(player, playerData)
+        -- if playerData.doors. 
+        local found = false
+        for _,v in pairs(playerData.doors) do
+            if v.doorId == tag then
+                found = true
+            end
+        end
+        if not found then
+            table.insert(playerData.doors, {doorId = tag, description=self.Server.DoorDict[tag]['description']})
+            DoorService.PlayerSrvc.Client:SavePlayerData(player, playerData)
+        end
     end)
 end
 

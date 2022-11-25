@@ -18,7 +18,6 @@ function PlayerInfo:backPackButtonEvent(player)
     local newStr = "BackSack Contents \n"
 
     for i,v in pairs(backsackData) do
-        -- if type(v) == "number" or type(v) == "string" then
              if v then
                  newStr ..= i .. " : " .. v .. "\n"
             end
