@@ -65,18 +65,22 @@ function DoorService.Client:thresholdCrossed(player,tag)
         local dest = tele
         self.Server:sendPlayer(player,dest,tag)
         -- SetPlayer door counter 
-        local playerData = DoorService.PlayerSrvc.Client:GetPlayerData(player)
-        -- if playerData.doors. 
-        local found = false
-        for _,v in pairs(playerData.doors) do
-            if v.doorId == tag then
-                found = true
+       --  local playerData = DoorService.PlayerSrvc.Client:GetPlayerData(player)
+         
+        DoorService.PlayerSrvc.Client:GetPlayerData(player):andThen( function(playerData) 
+            local found = false
+            if playerData and playerData.doors then
+                for _,v in pairs(playerData.doors) do
+                    if v.doorId == tag then
+                        found = true
+                    end
+                end
             end
-        end
-        if not found then
-            table.insert(playerData.doors, {doorId = tag, description=self.Server.DoorDict[tag]['description']})
-            DoorService.PlayerSrvc.Client:SavePlayerData(player, playerData)
-        end
+            if not found then
+                table.insert(playerData.doors, {doorId = tag, description=self.Server.DoorDict[tag]['description']})
+                DoorService.PlayerSrvc.Client:SavePlayerData(player, playerData)
+            end
+        end):catch(warn)
     end)
 end
 

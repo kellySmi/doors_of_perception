@@ -18,9 +18,11 @@ player.CharacterAdded:Connect(function()
     local pgui  = Knit.Player:WaitForChild("PlayerGui")
     local recScoreGui = pgui:WaitForChild("RecScore")
     recScoreGui.ScoreFrame.ScoreLabel.Text = playerData.coins
-    -- if playerData.lastSpawnPt ~= player.Team.Name then 
-    --   player.Team.Name = playerData.lastSpawnPt
-    -- end
+    if playerData.lastSpawnPt and (playerData.lastSpawnPt ~= player.Team.Name) then 
+       player.Team.Name = playerData.lastSpawnPt
+    else
+      player.Team.Name = "Start"
+    end
    -- if playerUpdated then
     ---  PlayerSrvc:SavePlayerData(playerData) -- :andThen(function() 
     PlayerController.playerData = playerData
