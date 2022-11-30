@@ -12,13 +12,13 @@ ProximityPromptService.PromptTriggered:Connect(function (promptObject, player)
 	promptService.route(promptObject,player)
 	task.wait(RESET_TIME)
 end)
--- local function onPromptHoldBegan(promptObject, player)
--- end
+-- ProximityPromptService.PromptButtonHoldBegan:Connect(function(promptObject, player)
+-- end)
 -- local function onPromptHoldEnded(promptObject, player)
 -- end
 -- -- Connect prompt events to handling functions
 
--- ProximityPromptService.PromptButtonHoldBegan:Connect(onPromptHoldBegan)
+
 -- ProximityPromptService.PromptButtonHoldEnded:Connect(onPromptHoldEnded)
 
 return ProximityPService

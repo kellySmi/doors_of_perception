@@ -11,7 +11,7 @@ local DoorService = Knit.CreateService { Name="DoorService", Client = {} }
 DoorService.DoorDict = { 
     X6 = { target="X5", position={x=1169.221, y=1212.727, z=377.013}, private=0, description="start door 1", offset={x=-5,y=0,z=0}},
     X5 = { target="X6", position={x=927.212, y=1209.468, z=445.66},  private=0, description="start door 2", offset={x=0,y=0,z=-5}, angle={x=0, y=90, z=0}},
-    
+    AA00 = { target="XX00", position={x=-4315.931, y=3007.18, z=6725.491}, private=1,description="Master Door on the station ", offset={x=0,y=0,z=-5}},
     Z1 = { target="Y1", position={x=1090.101, y=1210.814, z=478.263}, private=1, description="Admin door 1", offset={x=0,y=0,z=5}, angle={x=0, y=15, z=0}},
     Y1 = { target="Z2", position={x=798.287, y=1659.879, z=1234.709}, private=1, description="Rainbow Bridge", offset={x=0,y=0,z=5}},
     Z2 = { target="Z3", position={x=410.506, y=1619.023, z=4611.756}, private=1, description="FunLand 1", offset={x=0,y=0,z=5}},
